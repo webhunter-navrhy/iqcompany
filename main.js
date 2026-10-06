@@ -19,6 +19,15 @@
     document.body.style.overflow = '';
   }));
 
+  // pixel dissolve tiles
+  document.querySelectorAll('.tl').forEach(tl => {
+    for (let i = 0; i < 140; i++) {
+      const s = document.createElement('i');
+      s.style.setProperty('--d', (Math.random() * 1.1).toFixed(2));
+      tl.appendChild(s);
+    }
+  });
+
   // reveals
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
