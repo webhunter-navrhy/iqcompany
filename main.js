@@ -23,9 +23,11 @@
 
   // pixel dissolve tiles
   document.querySelectorAll('.tl').forEach(tl => {
-    for (let i = 0; i < 1260; i++) {
+    const map = tl.parentElement.style.getPropertyValue('--k') === '1';
+    for (let i = 0; i < 2700; i++) {
       const s = document.createElement('i');
-      s.style.setProperty('--d', (Math.random() * 1.1).toFixed(2));
+      s.style.setProperty('--d', (Math.random() * 1.6).toFixed(2));
+      if (map) s.style.backgroundPosition = `${(i % 60) / 59 * 100}% ${Math.floor(i / 60) / 44 * 100}%`;
       tl.appendChild(s);
     }
   });
