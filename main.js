@@ -19,9 +19,11 @@
     document.body.style.overflow = '';
   }));
 
+  if (/[?&]kontura=0/.test(location.search)) document.body.classList.add('bez-kontury');
+
   // pixel dissolve tiles
   document.querySelectorAll('.tl').forEach(tl => {
-    for (let i = 0; i < 140; i++) {
+    for (let i = 0; i < 1260; i++) {
       const s = document.createElement('i');
       s.style.setProperty('--d', (Math.random() * 1.1).toFixed(2));
       tl.appendChild(s);
