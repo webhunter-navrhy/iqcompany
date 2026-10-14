@@ -21,17 +21,15 @@
 
   if (/[?&]kontura=0/.test(location.search)) document.body.classList.add('bez-kontury');
 
-  // pixel dissolve tiles: 80x60 kostiček, rozpad po blocích 3x3 v náhodném pořadí
+  // pixel dissolve tiles: 100x75 kostiček, náhodný rozpad
   document.querySelectorAll('.tl').forEach(tl => {
     const map = tl.parentElement.style.getPropertyValue('--k') === '1';
-    const C = 80, R = 60;
-    const order = [0,1,2,3,4,5,6,7,8].sort(() => Math.random() - 0.5);
+    const C = 100, R = 75;
     const frag = document.createDocumentFragment();
     for (let i = 0; i < C * R; i++) {
       const x = i % C, y = Math.floor(i / C);
-      const blk = Math.floor(y / (R / 3)) * 3 + Math.floor(x / (C / 3));
       const s = document.createElement('i');
-      s.style.setProperty('--d', (order[blk] * 0.24 + Math.random() * 0.6).toFixed(2));
+      s.style.setProperty('--d', (Math.random() * 1.6).toFixed(2));
       if (map) s.style.backgroundPosition = `${x / (C - 1) * 100}% ${y / (R - 1) * 100}%`;
       frag.appendChild(s);
     }
