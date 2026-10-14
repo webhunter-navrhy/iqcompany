@@ -21,20 +21,58 @@
 
   if (/[?&]kontura=0/.test(location.search)) document.body.classList.add('bez-kontury');
 
-  // pixel dissolve tiles: 100x75 kostiček, náhodný rozpad
+  // rozpad karet: jeden canvas na kartu (100x75 kostiček po 6 px), kreslí se jen změněné kostičky
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const C = 100, R = 75, T = 6, W = C * T, H = R * T, LV = 10;
+  const phase = p => (p < 59 || p >= 81) ? 1 : p < 65 ? 1 - (p - 59) / 6 : p < 75 ? 0 : (p - 75) / 6;
+  const cards = [];
   document.querySelectorAll('.tl').forEach(tl => {
-    const map = tl.parentElement.style.getPropertyValue('--k') === '1';
-    const C = 100, R = 75;
-    const frag = document.createDocumentFragment();
-    for (let i = 0; i < C * R; i++) {
-      const x = i % C, y = Math.floor(i / C);
-      const s = document.createElement('i');
-      s.style.setProperty('--d', (Math.random() * 1.6).toFixed(2));
-      if (map) s.style.backgroundPosition = `${x / (C - 1) * 100}% ${y / (R - 1) * 100}%`;
-      frag.appendChild(s);
+    const card = tl.parentElement;
+    const k = +card.style.getPropertyValue('--k') || 0;
+    const col = card.style.getPropertyValue('--c').trim();
+    const cv = document.createElement('canvas');
+    cv.width = W; cv.height = H;
+    tl.appendChild(cv);
+    const ctx = cv.getContext('2d');
+    const base = document.createElement('canvas');
+    base.width = W; base.height = H;
+    const bctx = base.getContext('2d');
+    const paint = () => { bctx.fillStyle = col; bctx.fillRect(0, 0, W, H); };
+    paint();
+    const draw = (x, y, a) => {
+      ctx.clearRect(x * T, y * T, T, T);
+      if (a > 0) { ctx.globalAlpha = a; ctx.drawImage(base, x * T, y * T, T, T, x * T, y * T, T, T); ctx.globalAlpha = 1; }
+    };
+    ctx.drawImage(base, 0, 0);
+    const delay = new Float32Array(C * R), lvl = new Uint8Array(C * R).fill(LV);
+    for (let i = 0; i < C * R; i++) delay[i] = Math.random() * 1.6 + k * 1.6;
+    if (card.querySelector('.cb img[src*="odjizdime"]')) {
+      const img = new Image();
+      img.onload = () => { bctx.drawImage(img, 0, 0, W, H); ctx.clearRect(0, 0, W, H); ctx.drawImage(base, 0, 0); lvl.fill(LV); };
+      img.src = 'assets/mapa-odj.jpg';
     }
-    tl.appendChild(frag);
+    cards.push({ card, ctx, base, delay, lvl, draw, visible: true });
   });
+  if (cards.length && !reduce) {
+    const vio = new IntersectionObserver(es => es.forEach(e => {
+      const c = cards.find(c => c.card === e.target); if (c) c.visible = e.isIntersecting;
+    }));
+    cards.forEach(c => vio.observe(c.card));
+    const t0 = performance.now();
+    const frame = now => {
+      const s = (now - t0) / 1000;
+      if (!document.hidden) cards.forEach(c => {
+        if (!c.visible) return;
+        for (let i = 0; i < C * R; i++) {
+          const loc = s - c.delay[i];
+          const l = loc < 0 ? LV : Math.round(phase(((loc % 14) / 14) * 100) * LV);
+          if (l !== c.lvl[i]) { c.lvl[i] = l; c.draw(i % C, (i / C) | 0, l / LV); }
+        }
+      });
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  }
 
   // reveals
   const io = new IntersectionObserver(entries => {

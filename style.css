@@ -103,8 +103,8 @@ b{font-weight:500}
 .card{position:relative;display:block;aspect-ratio:4/3;border-radius:16px;box-shadow:0 30px 50px -34px rgba(5,29,21,.55);animation:lev 6s ease-in-out infinite;animation-delay:calc(var(--k)*-2s);transition:transform .4s var(--ease)}
 .card:hover{transform:scale(1.03)}
 @keyframes lev{0%,100%{translate:0 0}50%{translate:0 -12px}}
-.tl{position:absolute;inset:0;display:grid;grid-template-columns:repeat(100,1fr);grid-template-rows:repeat(75,1fr);border-radius:16px;overflow:hidden}
-.tl i{background:var(--c);box-shadow:0 0 0 1px var(--c);animation:tile 14s linear infinite;animation-delay:calc(var(--d)*1s + var(--k)*1.6s)}
+.tl{position:absolute;inset:0;border-radius:16px;overflow:hidden;background:var(--c)}
+.tl canvas{display:block;width:100%;height:100%}
 @keyframes tile{0%,59%{opacity:1}65%{opacity:0}75%{opacity:0}81%,100%{opacity:1}}
 .cb{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;padding:1.6rem;animation:txt 14s linear infinite;animation-delay:calc(var(--k)*1.6s + 1.5s)}
 @keyframes txt{0%,59%{opacity:1}65%{opacity:0}75%{opacity:0}81%,100%{opacity:1}}
@@ -112,8 +112,7 @@ b{font-weight:500}
 .cb img.globe{width:auto;height:30%;max-height:none}
 .card:nth-child(2) .cb img{width:80%}
 .card:nth-child(2) .cap{color:#093024}
-.card:nth-child(2) .tl i{box-shadow:none;background:var(--c) url(assets/mapa-odj.jpg) no-repeat;background-size:10000% 7500%}
-.cap{font-size:clamp(.66rem,.9vw,.8rem);letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:rgba(243,240,232,.85)}
+.card:nth-child(2) .cap{font-size:clamp(.66rem,.9vw,.8rem);letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:rgba(243,240,232,.85)}
 .quo{margin-top:calc(-1 * clamp(1.2rem,3.4vh,2.4rem));position:relative;z-index:2;font-size:.9rem;letter-spacing:.3em;text-transform:uppercase;font-weight:700;color:var(--ink)}
 body.bez-kontury .card{box-shadow:0 30px 50px -34px rgba(5,29,21,.55)}
 
