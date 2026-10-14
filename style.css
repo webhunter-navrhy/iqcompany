@@ -279,3 +279,16 @@ body.bez-kontury .card{box-shadow:0 30px 50px -34px rgba(5,29,21,.55)}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .reveal,.reveal-img{opacity:1;transform:none;clip-path:none}
 }
+
+/* patička: nadpisy větší a tučné, údaje menší a netučné (připomínky 13. 10.) */
+.ct-cols .ct-name{font-family:var(--f-display);font-size:1.45rem;font-weight:700;line-height:1.2;color:var(--cream);margin-bottom:1rem}
+.ct-cols .ct-addr{font-size:.88rem;font-weight:400;line-height:1.45;margin-bottom:1.1rem}
+.ct-links.ct-addr{gap:.45rem}
+.ct-links li{display:flex;gap:1.4rem;justify-content:space-between;max-width:26rem}
+.ct-links li span{color:rgba(243,240,232,.7);white-space:nowrap}
+/* časová osa: roky velké, názvy na střed pod nimi */
+.timeline li{text-align:center;padding-right:0}
+.timeline li::before{left:50%;transform:translateX(-50%)}
+a.yr{color:var(--cream);transition:color .3s}
+a.yr:hover{color:var(--iq-soft)}
+.timeline{margin-top:clamp(3rem,6vw,5rem)}

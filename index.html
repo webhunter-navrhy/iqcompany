@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=3f1a26d7">
+<link rel="stylesheet" href="style.css?v=84b6a49a">
 </head>
 <body>
 
@@ -33,8 +33,7 @@
   </a>
   <nav class="nav-links" aria-label="Hlavní navigace">
     <a href="#spolecnosti">Společnosti</a>
-    <a href="#prehled">Přehled</a>
-    <a href="#nekola">Tonda Nekola</a>
+    <a href="#prehled">Naše DNA</a>
     <a href="#kontakt" class="nav-cta">Kontakt</a>
   </nav>
   <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
@@ -42,8 +41,7 @@
 
 <div class="mnav" id="mnav">
   <a href="#spolecnosti">Společnosti</a>
-  <a href="#prehled">Přehled</a>
-  <a href="#nekola">Tonda Nekola</a>
+  <a href="#prehled">Naše DNA</a>
   <a href="#kontakt">Kontakt</a>
 </div>
 
@@ -169,7 +167,7 @@
 <section class="overview" id="prehled">
   <div class="ov-inner">
     <div class="sec-head sec-head--dark reveal">
-      <p class="kicker">Rychlý přehled</p>
+      <p class="kicker">Naše DNA</p>
       <h2 class="h2">Co je <em>právě aktivní</em></h2>
     </div>
 
@@ -192,12 +190,11 @@
     </div>
 
     <div class="timeline reveal">
-      <p class="kicker">Jak kameny přibývaly</p>
       <ol>
-        <li style="--c:#8f98c9"><span class="yr" data-count="2014">2014</span><span>TERRITORY PRAGUE s.r.o.</span></li>
-        <li style="--c:#7fb59b"><span class="yr" data-count="2020">2020</span><span>IQ Company a.s.</span></li>
-        <li style="--c:#7d9ad6"><span class="yr" data-count="2022">2022</span><span>E-dron PLUS s.r.o.</span></li>
-        <li style="--c:#D4AF37"><span class="yr" data-count="2022">2022</span><span>TLH Travel s.r.o.</span></li>
+        <li style="--c:#7fb59b"><a class="yr" data-count="2020" href="https://or.justice.cz/ias/ui/rejstrik-$firma?ico=09163425" target="_blank" rel="noopener" title="Obchodní rejstřík">2020</a><span>IQ Company a.s.</span></li>
+        <li style="--c:#8f98c9"><a class="yr" data-count="2014" href="https://or.justice.cz/ias/ui/rejstrik-$firma?ico=03290221" target="_blank" rel="noopener" title="Obchodní rejstřík">2014</a><span>TERRITORY PRAGUE s.r.o.</span></li>
+        <li style="--c:#D4AF37"><a class="yr" data-count="2022" href="https://or.justice.cz/ias/ui/rejstrik-$firma?ico=17655439" target="_blank" rel="noopener" title="Obchodní rejstřík">2022</a><span>TLH Travel s.r.o.</span></li>
+        <li style="--c:#7d9ad6"><a class="yr" data-count="2022" href="https://or.justice.cz/ias/ui/rejstrik-$firma?ico=17492696" target="_blank" rel="noopener" title="Obchodní rejstřík">2022</a><span>E-dron PLUS s.r.o.</span></li>
       </ol>
     </div>
   </div>
@@ -241,21 +238,22 @@
   <div class="ct-inner">
     <div class="ct-main reveal">
       <img src="assets/iq-cream.png" alt="Logo IQ Company a.s." class="ct-logo" loading="lazy">
-      <h2 class="h2">Napište <em>nám</em></h2>
+      <h2 class="h2">Pište <em>nám</em></h2>
       <a href="mailto:info@iqcompany.cz" class="ct-mail">info@iqcompany.cz</a>
     </div>
     <div class="ct-cols reveal">
-      <div>
-        <p class="kicker">IQ Company a.s.</p>
-        <p>Bílkova 855/19<br>110 00 Praha 1 – Staré Město</p>
-        <p>IČO 09163425<br>DIČ CZ09163425</p>
+      <div class="ct-firm">
+        <p class="ct-name">IQ Company a.s.</p>
+        <p class="ct-addr">Bílkova 855/19<br>110 00 Praha 1 – Staré Město</p>
+        <p class="ct-addr">IČO 09163425<br>DIČ CZ09163425</p>
+        <p class="ct-addr">DS: csy6u5f<br><a class="link-u" href="https://or.justice.cz/ias/ui/rejstrik-$firma?ico=09163425" target="_blank" rel="noopener">OR – obchodní rejstřík</a></p>
       </div>
-      <div>
-        <p class="kicker">Společnosti</p>
-        <ul class="ct-links">
-          <li><a class="link-u" href="#territory">TERRITORY PRAGUE s.r.o.</a></li>
-          <li><a class="link-u" href="https://odjizdime.cz/" target="_blank" rel="noopener">TLH Travel s.r.o. — odjizdime.cz</a></li>
-          <li><a class="link-u" href="https://www.e-dron.cz/" target="_blank" rel="noopener">E-dron PLUS s.r.o. — e-dron.cz</a></li>
+      <div class="ct-firm">
+        <p class="ct-name">Společnosti</p>
+        <ul class="ct-links ct-addr">
+          <li><a class="link-u" href="#territory">TERRITORY PRAGUE s.r.o.</a><span>DS: fyimsmk</span></li>
+          <li><a class="link-u" href="https://odjizdime.cz/" target="_blank" rel="noopener">TLH Travel s.r.o.</a><span>DS: xv57gsh</span></li>
+          <li><a class="link-u" href="https://www.e-dron.cz/" target="_blank" rel="noopener">E-dron PLUS s.r.o.</a><span>DS: 3amupbw</span></li>
         </ul>
       </div>
     </div>
