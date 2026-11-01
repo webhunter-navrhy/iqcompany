@@ -100,7 +100,7 @@ b{font-weight:500}
 @keyframes draw{to{stroke-dashoffset:0}}
 
 .cards{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1rem,2.4vw,2rem);width:100%;max-width:860px}
-.card{position:relative;display:block;aspect-ratio:4/3;border-radius:16px;box-shadow:0 30px 50px -34px rgba(5,29,21,.55);animation:lev 6s ease-in-out infinite;animation-delay:calc(var(--k)*-2s);transition:transform .4s var(--ease)}
+.card{position:relative;display:block;aspect-ratio:4/3;animation:lev 6s ease-in-out infinite;animation-delay:calc(var(--k)*-2s);transition:transform .4s var(--ease)}
 .card:hover{transform:scale(1.03)}
 @keyframes lev{0%,100%{translate:0 0}50%{translate:0 -12px}}
 .tl{position:absolute;inset:0;border-radius:16px;overflow:hidden;background:var(--c)}
@@ -333,3 +333,24 @@ body{--bn:clamp(1.3rem,2vw,1.75rem)}
 
 /* připomínky 14. 10. (2): nadpis sladěn s logem + názvem */
 .h1-sm{font-size:var(--bn);line-height:1.25}
+
+/* ═══ 1. 11. 2026: bez obdélníků, loga levitují ve svých barvách, text pod nimi stejnou barvou ═══ */
+.tl{display:none}
+.cb{animation:none;gap:1.1rem;padding:0}
+.cb img{perspective:800px;backface-visibility:visible;will-change:transform}
+.card:nth-child(1) .cb img{width:58%;max-height:none}
+.card:nth-child(2) .cb img{width:92%;max-height:none}
+.card:nth-child(3) .cb img{width:72%;max-height:none}
+.cap,.card:nth-child(2) .cap{color:var(--c)}
+.card .cap{font-size:clamp(.66rem,.9vw,.8rem);letter-spacing:.24em;text-transform:uppercase;font-weight:500}
+.card:hover{transform:none}
+.ov-row .pb{display:none}
+/* patička: názvy společností pod „Společnosti“, vždy v jednom řádku, DS ve stejném sloupci */
+.ct-cols{grid-template-columns:minmax(0,1fr) max-content minmax(0,1fr)}
+.ct-cols .ct-firm:nth-child(2){text-align:left}
+.ct-links li{grid-template-columns:max-content max-content;justify-content:start;gap:1.4rem}
+.ct-links li a{justify-self:start;white-space:nowrap}
+.ct-links li span{justify-self:start}
+@media (max-width:820px){.ct-cols{grid-template-columns:1fr}}
+.ct-links{grid-template-columns:max-content max-content;column-gap:1.4rem}
+.ct-links li{display:contents}
