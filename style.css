@@ -354,3 +354,10 @@ body{--bn:clamp(1.3rem,2vw,1.75rem)}
 @media (max-width:820px){.ct-cols{grid-template-columns:1fr}}
 .ct-links{grid-template-columns:max-content max-content;column-gap:1.4rem}
 .ct-links li{display:contents}
+
+/* ═══ 5. 11. 2026: kruh Q se odvozuje od šířky karet (stejný odstup logo–kruh na monitoru i MacBooku), loga menší, Odjíždíme zlaté ═══ */
+.q-ring{position:absolute;left:50%;top:50%;width:130%;max-width:none;transform:translate(-50%,-55%);z-index:-1;pointer-events:none;overflow:visible}
+.card:nth-child(1) .cb img{width:34%}
+.card:nth-child(2) .cb img{width:92%}
+.card:nth-child(3) .cb img{width:54%}
+.card:nth-child(2) .cap{color:#B8941F}
