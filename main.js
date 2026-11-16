@@ -81,4 +81,52 @@
       btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
     });
   }
+
+  // Odjíždíme: fotky se nahodile střídají, přechod = jemný chaotický rozpad po kostičkách (bez rámečku)
+  const sc = document.getElementById('slides');
+  if (sc && sc.getContext) {
+    const fig = sc.parentElement;
+    const names = ['wing', 'boat', 'cabin', 'ferry', 'hat', 'wagon'];
+    const imgs = names.map(n => { const i = new Image(); i.src = 'assets/odj-' + n + '.jpg'; return i; });
+    const ctx = sc.getContext('2d');
+    let W = 0, H = 0, cur = 0, nxt = -1, tiles = [], t0 = 0, busy = false;
+    const T = 26, DUR = reduce ? 1 : 2600;
+    const fit = (im, o) => { // object-fit: cover
+      const r = Math.max(W / im.naturalWidth, H / im.naturalHeight);
+      const w = im.naturalWidth * r, h = im.naturalHeight * r;
+      o.drawImage(im, (W - w) / 2, (H - h) / 2, w, h);
+    };
+    const size = () => {
+      const r = fig.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
+      W = Math.round(r.width * d); H = Math.round(r.height * d); sc.width = W; sc.height = H;
+      if (imgs[cur].complete) { ctx.clearRect(0, 0, W, H); fit(imgs[cur], ctx); }
+    };
+    const frame = ts => {
+      if (!t0) t0 = ts;
+      const p = Math.min((ts - t0) / DUR, 1);
+      fit(imgs[cur], ctx);
+      const cols = Math.ceil(W / (T * (W / 600))), rows = Math.ceil(H / (T * (W / 600)));
+      const cw = W / cols, ch = H / rows;
+      ctx.save(); ctx.beginPath();
+      for (let k = 0; k < tiles.length; k++) {
+        if (tiles[k] <= p) { const c = k % cols, r = (k / cols) | 0; ctx.rect(c * cw, r * ch, cw + 1, ch + 1); }
+      }
+      ctx.clip(); fit(imgs[nxt], ctx); ctx.restore();
+      if (p < 1) requestAnimationFrame(frame);
+      else { cur = nxt; busy = false; fit(imgs[cur], ctx); }
+    };
+    const change = () => {
+      if (!document.hidden && !busy && imgs.every(i => i.complete && i.naturalWidth)) {
+        const r = r2 => Math.floor(Math.random() * r2);
+        do { nxt = r(imgs.length); } while (nxt === cur);
+        const cols = Math.ceil(W / (T * (W / 600))), rows = Math.ceil(H / (T * (W / 600)));
+        tiles = Array.from({ length: cols * rows }, () => Math.random());
+        busy = true; t0 = 0; requestAnimationFrame(frame);
+      }
+      setTimeout(change, 4500 + Math.random() * 2500);
+    };
+    imgs[0].onload = size; size();
+    addEventListener('resize', () => { if (!busy) size(); });
+    setTimeout(change, 3500);
+  } else if (sc) sc.parentElement.classList.add('no-js');
 })();
