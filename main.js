@@ -89,8 +89,10 @@
     const names = ['wing', 'boat', 'cabin', 'ferry', 'hat', 'wagon'];
     const imgs = names.map(n => { const i = new Image(); i.src = 'assets/odj-' + n + '.jpg'; return i; });
     const ctx = sc.getContext('2d');
-    let W = 0, H = 0, cur = 0, nxt = -1, tiles = [], t0 = 0, busy = false;
-    const T = 26, DUR = reduce ? 1 : 2600;
+    let W = 0, H = 0, cur = 0, nxt = -1, tiles = [], t0 = 0, busy = false, cols = 1, rows = 1;
+    const mk = document.createElement('canvas'), mx = mk.getContext('2d');
+    const tmp = document.createElement('canvas'), tx = tmp.getContext('2d');
+    const T = 2.6, DUR = reduce ? 1 : 2600;
     const fit = (im, o) => { // object-fit: cover
       const r = Math.max(W / im.naturalWidth, H / im.naturalHeight);
       const w = im.naturalWidth * r, h = im.naturalHeight * r;
@@ -105,13 +107,16 @@
       if (!t0) t0 = ts;
       const p = Math.min((ts - t0) / DUR, 1);
       fit(imgs[cur], ctx);
-      const cols = Math.ceil(W / (T * (W / 600))), rows = Math.ceil(H / (T * (W / 600)));
-      const cw = W / cols, ch = H / rows;
-      ctx.save(); ctx.beginPath();
-      for (let k = 0; k < tiles.length; k++) {
-        if (tiles[k] <= p) { const c = k % cols, r = (k / cols) | 0; ctx.rect(c * cw, r * ch, cw + 1, ch + 1); }
-      }
-      ctx.clip(); fit(imgs[nxt], ctx); ctx.restore();
+      const id = mx.createImageData(cols, rows), dt = id.data;
+      for (let k = 0; k < tiles.length; k++) dt[k * 4 + 3] = tiles[k] <= p ? 255 : 0;
+      mx.putImageData(id, 0, 0);
+      tmp.width = W; tmp.height = H; // vymaže
+      fit(imgs[nxt], tx);
+      tx.globalCompositeOperation = 'destination-in';
+      tx.imageSmoothingEnabled = false;
+      tx.drawImage(mk, 0, 0, W, H);
+      tx.globalCompositeOperation = 'source-over';
+      ctx.drawImage(tmp, 0, 0);
       if (p < 1) requestAnimationFrame(frame);
       else { cur = nxt; busy = false; fit(imgs[cur], ctx); }
     };
@@ -119,7 +124,8 @@
       if (!document.hidden && !busy && imgs.every(i => i.complete && i.naturalWidth)) {
         const r = r2 => Math.floor(Math.random() * r2);
         do { nxt = r(imgs.length); } while (nxt === cur);
-        const cols = Math.ceil(W / (T * (W / 600))), rows = Math.ceil(H / (T * (W / 600)));
+        cols = Math.ceil(W / (T * (W / 600))); rows = Math.ceil(H / (T * (W / 600)));
+        mk.width = cols; mk.height = rows;
         tiles = Array.from({ length: cols * rows }, () => Math.random());
         busy = true; t0 = 0; requestAnimationFrame(frame);
       }

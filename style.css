@@ -363,12 +363,13 @@ body{--bn:clamp(1.3rem,2vw,1.75rem)}
 .card:nth-child(2) .cap{color:#B8941F}
 
 /* Odjíždíme: text „Jsme“ + slideshow fotek bez rámečku */
-.jsme{margin-bottom:1rem}
+.co--od .h3{font-weight:400}
+.jsme{margin:1.6rem 0 1rem;text-align:justify;hyphens:auto}
 .jsme b,.jsme-c b{color:#B8941F;font-weight:700}
 .jsme-c{text-align:center;margin:1.2rem 0 1.4rem}
 .jsme-c p{margin:0 0 .7rem}
-.co-slides::before{display:none}
-.co-slides canvas{position:relative;z-index:1;width:100%;height:100%;display:block}
+.jsme-c p.plain{color:#111;font-weight:400}
+.co-slides canvas{position:relative;z-index:1;width:100%;height:100%;display:block;border-radius:14px;box-shadow:0 40px 70px -40px rgba(5,29,21,.55)}
 .co-slides img.slides-fallback{display:none}
 .co-slides.no-js canvas{display:none}
 .co-slides.no-js img.slides-fallback{display:block}
